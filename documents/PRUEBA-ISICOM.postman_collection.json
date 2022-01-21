@@ -1,0 +1,61 @@
+{
+	"info": {
+		"_postman_id": "a88b50ca-2738-4fcd-aa19-7b1f34c605a6",
+		"name": "PRUEBA-ISICOM",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "productoGenerico/listarLinea",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:4000/productoGenerico/listarLinea",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "4000",
+					"path": [
+						"productoGenerico",
+						"listarLinea"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "productoGenerico/listarSubLinea",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:4000/productoGenerico/listarSubLinea?cod_linea=5000",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "4000",
+					"path": [
+						"productoGenerico",
+						"listarSubLinea"
+					],
+					"query": [
+						{
+							"key": "cod_linea",
+							"value": "5000"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

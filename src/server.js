@@ -8,6 +8,6 @@ app.listen(config.express.port, function (error) {
     process.exit(10)
   }
   winston.info('express is listening on http://' +
-    //config.express.ip + ':' + 
+    config.express.ip + ':' + 
     config.express.port)
 });

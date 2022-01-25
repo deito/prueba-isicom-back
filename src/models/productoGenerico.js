@@ -34,7 +34,7 @@ model.buscar = async (conn, parametros) => {
                 queryParameters.push(parametros.cod_sublinea);
             }
             if(parameterNames[i] === "material"){
-                whereCondition = whereCondition + " UPPER(producto_generico.material) like '%'||UPPER($" +(i + 1) +")";
+                whereCondition = whereCondition + " UPPER(producto_generico.material) like '%'||UPPER($" +(i + 1) +")||'%'";
                 queryParameters.push(parametros.material);
             }
             i = i + 1;
@@ -93,7 +93,7 @@ model.contarTotalFilasDeBuscar = async (conn, parametros) => {
                 queryParameters.push(parametros.cod_sublinea);
             }
             if(parameterNames[i] === "material"){
-                whereCondition = whereCondition + " UPPER(producto_generico.material) like '%'||UPPER($" +(i + 1) +")";
+                whereCondition = whereCondition + " UPPER(producto_generico.material) like '%'||UPPER($" +(i + 1) +")||'%'";
                 queryParameters.push(parametros.material);
             }
             i = i + 1;

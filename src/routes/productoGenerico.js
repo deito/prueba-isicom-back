@@ -6,4 +6,6 @@ router.get('/listarLinea', productoGenericoController.listarLinea);
 
 router.get('/listarSubLinea', productoGenericoController.listarSubLinea);
 
+router.post('/buscar', productoGenericoController.buscar);
+
 module.exports = router;

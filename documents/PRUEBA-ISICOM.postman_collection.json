@@ -56,6 +56,48 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "productoGenerico/buscar",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJJU0lDT00tQVBQIiwiaWF0IjoxNjQyNDEwMDIyLCJleHAiOjE2NDMxMDEyMjIsImlzcyI6IkNlbWVudG9zIFBhY2FtYXlvIFMuQS5BLiJ9.JtajbXrYt96mVm4iAe0XJb6CXIirjwhfTk6sILIHZwBNqEzj2WEDCDBurMvwwbrOx01L75racFJT5dZvHehCYeSrelvz6KlZcalwRdJE3TbDyKCJjlJ7EdH5ZBkBsgyavULWPhasJ4qJXgZdLOtRRxKoeCdCkVIKVjeEEIHKpjnIKB20MJYM6L7-qeFWlTx3PpnPuEXLx-vtho_0MCZb7q2uqxLuFAXNgjN7PBck0y9XZwHr3ezYo5QOL8kYGy2uilckxKzTvXR1KCyAXHZl-BKECgl76zA99Cc4ejlzFna6tbAXH_1ZyKOqzjxmgCp1fO556LUND4YDg-TkATL207w7GrA4iO2HYRAB7Fmk_mEcKCL9lSq-P2rHkS8LwCslKamGyq74W_oXOT1FLjZsKdAGnkzzyXnrSjCK3JcBdaZwzcguOrdkwHLUT-ci6mzYkz1qZf_wJgueFvXV5e-kAmW93Nkeu0k5eKQjbITmi0xXYsNfV5Bs9prY6FfTCtaWH89VN1MEOtwERNB9BJvwLtE7Op4lagR1VkRIiu7LhxfMzXKfsLP9NgUKDVi2uQwzP9UT9jwV7hx_ySmZREeEgiLEg-wdnr3SEJInNGtj2-qq8u-X9JcCC-Bc0PEjg96whrXuOTgv3AGPwUToO_nPNvCERhc4pTqjZ3Xk74Fq1vQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"cod_linea\": \"1000\",\r\n    \"cod_sublinea\": \"\",\r\n    \"material\": \"CEMSELVA\",\r\n    \"cantidad_filas\": \"10\",\r\n    \"pagina\": \"1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:4000/productoGenerico/buscar",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "4000",
+					"path": [
+						"productoGenerico",
+						"buscar"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

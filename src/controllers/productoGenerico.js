@@ -1,6 +1,8 @@
 const winston = require('../utils/winston');
 const config = require('../config');
 const fetch = require('node-fetch');
+const postgresConn = require('../utils/postgres');
+const productoGenericoModel = require('../models/productoGenerico');
 
 const controller = {};
 
@@ -95,11 +97,48 @@ controller.listarSubLinea = async (req, res) => {
 controller.buscar = async (req, res) => {
     winston.info(`=-=-=-=-=-=> Inicio: controllers.productoGenerico.buscar`);
     try {
-        
+        const response = {
+            resultado: 0,
+            mensaje: "Error inesperado controllers.productoGenerico.listarLinea"
+        };
+
+        let { cod_linea, cod_sublinea, material, cantidad_filas, pagina } = req.body;
+
+        if( !(parseInt(cantidad_filas) && parseInt(cantidad_filas)> 0) ){
+            response.mensaje = "El campo cantidad_filas no tiene un valor válido. Tipo de dato: '"+(typeof cantidad_filas)+"', valor = "+cantidad_filas;
+            winston.info("response: ", response);
+            res.status(200).json(response);
+            return;
+        }
+
+        if( !(parseInt(pagina) && parseInt(pagina)> 0) ){
+            response.mensaje = "El campo pagina no tiene un valor válido. Tipo de dato: '"+(typeof pagina)+"', valor = "+pagina;
+            winston.info("response: ", response);
+            res.status(200).json(response);
+            return;
+        }
+
+        const busquedaRes = await productoGenericoModel.buscar(postgresConn, req.body);
+        winston.info("busquedaRes.rows.length: ", busquedaRes.rows.length);
+
+        const contarTotalFilasDeBuscarRes = await productoGenericoModel.contarTotalFilasDeBuscar(postgresConn, req.body);
+        winston.info("contarTotalFilasDeBuscarRes.rows:", contarTotalFilasDeBuscarRes.rows);
+
+        response.resultado = 1;
+        response.mensaje = "";
+        response.datos = {
+            total_filas: contarTotalFilasDeBuscarRes.rows[0].cantidad,
+            lista:  busquedaRes.rows            
+        };
+        res.status(200).json(response);
     } catch (error) {
-        
+        winston.error("Error en controllers.productoGenerico.buscar: ", error);
+        res.status(200).send({
+            codigo: 0,
+            mensaje: error.message
+        });
     } finally {
-        winston.info(`=-=-=-=-=-=> Inicio: controllers.productoGenerico.buscar`);
+        winston.info(`=-=-=-=-=-=> Fin: controllers.productoGenerico.buscar`);
     }
 }
 

@@ -1,12 +1,13 @@
 const path = require('path');
 const config = {};
+const INSTANCIA_CLOUD_DB = (process.env.DB_SOCKET_PATH ? `${process.env.DB_SOCKET_PATH}/${process.env.INSTANCE_CONNECTION_NAME}` : '127.0.0.1');
 
 config.postgres = {
     user: process.env.SQL_USER || 'postgres',
     password: process.env.SQL_PASSWORD || 'postgres',
-    host: '10.10.0.39',
-    port: process.env.SQL_PORT || 5432,
-    database: process.env.SQL_DATABASE || 'sismat'
+    host: INSTANCIA_CLOUD_DB,
+    port: process.env.SQL_PORT || 5434,
+    database: process.env.SQL_DATABASE || 'PRUEBA_ISICOM'
 }
 
 config.express = {

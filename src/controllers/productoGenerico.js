@@ -142,4 +142,54 @@ controller.buscar = async (req, res) => {
     }
 }
 
+controller.actualizarEstado = async (req, res) => {
+    winston.info(`=-=-=-=-=-=> Inicio: controllers.productoGenerico.actualizarEstado`);
+    try {
+        const response = {
+            resultado: 0,
+            mensaje: "Error inesperado controllers.productoGenerico.listarLinea"
+        };
+
+        let { id_producto_generico } = req.params;
+        let { estado } = req.body;
+        winston.info("req.params:", req.params);
+        winston.info("req.body:", req.body);
+        if( !(parseInt(id_producto_generico) && parseInt(id_producto_generico) > 0) ){
+            response.mensaje = "El campo id_producto_generico no tiene un valor válido. Tipo de dato: '"+(typeof id_producto_generico)+"', valor = "+id_producto_generico;
+            winston.info("response: ", response);
+            res.status(200).json(response);
+            return;
+        }
+        if( !(estado === 'ACTIVO' || estado === 'INACTIVO') ){
+            response.mensaje = "El campo estado no tiene un valor válido. Tipo de dato: '"+(typeof estado)+"', valor = "+estado;
+            winston.info("response: ", response);
+            res.status(200).json(response);
+            return;
+        }
+
+        let parametros = {
+            id_producto_generico: parseInt(id_producto_generico),
+            estado: estado
+        }
+        const actualizarEstadoRes = await productoGenericoModel.actualizarEstado(postgresConn, parametros);
+        //winston.info("actualizarEstadoRes:", actualizarEstadoRes);
+        if( !(actualizarEstadoRes && actualizarEstadoRes.rowCount === 1) ){
+            throw new Error(`Error en respuesta de productoGenericoModel.actualizarEstado, actualizarEstadoRes.rowCount: ${ actualizarEstadoRes.rowCount }`);
+        }
+
+        response.resultado = 1;
+        response.mensaje = "";
+        res.status(200).json(response);
+
+    } catch (error) {
+        winston.error("Error en controllers.productoGenerico.buscar: ", error);
+        res.status(200).send({
+            codigo: 0,
+            mensaje: error.message
+        });
+    } finally {
+        winston.info(`=-=-=-=-=-=> Fin: controllers.productoGenerico.actualizarEstado`);
+    }
+}
+
 module.exports = controller;

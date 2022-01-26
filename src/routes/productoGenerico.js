@@ -8,4 +8,6 @@ router.get('/listarSubLinea', productoGenericoController.listarSubLinea);
 
 router.post('/buscar', productoGenericoController.buscar);
 
+router.patch('/actualizarEstado/:id_producto_generico', productoGenericoController.actualizarEstado);
+
 module.exports = router;

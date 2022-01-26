@@ -114,4 +114,14 @@ model.contarTotalFilasDeBuscar = async (conn, parametros) => {
     }
 }
 
+model.actualizarEstado = async (conn, parametros) => {
+    try {
+        const queryResponse = await conn.query("UPDATE dino.tproducto_generico SET estado=$1 WHERE id_producto_generico=$2", [parametros.estado, parametros.id_producto_generico]);
+        return queryResponse;
+    } catch (error) {
+        error.stack = "\nError en models.productoGenerico.actualizarEstado, " + error.stack;
+        throw error;
+    }
+}
+
 module.exports = model;

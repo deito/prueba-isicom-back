@@ -74,7 +74,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"cod_linea\": \"1000\",\r\n    \"cod_sublinea\": \"\",\r\n    \"material\": \"CEMSELVA\",\r\n    \"cantidad_filas\": \"10\",\r\n    \"pagina\": \"1\"\r\n}",
+					"raw": "{\r\n    \"cod_linea\": \"\",\r\n    \"cod_sublinea\": \"\",\r\n    \"material\": \"CEMENTO\",\r\n    \"cantidad_filas\": \"10\",\r\n    \"pagina\": \"1\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -94,6 +94,44 @@
 					"path": [
 						"productoGenerico",
 						"buscar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "productoGenerico/actualizarEstado",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"estado\": \"INACTIVO\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:4000/productoGenerico/actualizarEstado?id_producto_generico=1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "4000",
+					"path": [
+						"productoGenerico",
+						"actualizarEstado"
+					],
+					"query": [
+						{
+							"key": "id_producto_generico",
+							"value": "1"
+						}
 					]
 				}
 			},

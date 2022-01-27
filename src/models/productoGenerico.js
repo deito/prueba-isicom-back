@@ -124,4 +124,12 @@ model.actualizarEstado = async (conn, parametros) => {
     }
 }
 
+model.crear = async (conn, parametros) => {
+    try {
+        const queryResponse = await conn.query("INSERT INTO dino.tproducto_generico (");
+    } catch (error) {
+        
+    }
+}
+
 module.exports = model;

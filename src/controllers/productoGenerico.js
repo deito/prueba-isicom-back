@@ -46,7 +46,7 @@ controller.listarLinea = async (req, res) => {
             mensaje: error.message
         });
     } finally {
-        winston.info(`=-=-=-=-=-=> Fin: listarLinea`);
+        winston.info(`=-=-=-=-=-=> Fin: controllers.productoGenerico.listarLinea`);
     }
 }
 
@@ -189,6 +189,83 @@ controller.actualizarEstado = async (req, res) => {
         });
     } finally {
         winston.info(`=-=-=-=-=-=> Fin: controllers.productoGenerico.actualizarEstado`);
+    }
+}
+
+controller.buscarMaterial = async (req, res) => {
+    winston.info(`=-=-=-=-=-=> Inicio: controllers.productoGenerico.buscarMaterial`);
+    try {
+        const response = {
+            resultado: 0,
+            mensaje: "Error inesperado controllers.productoGenerico.buscarMaterial"
+        };
+        let { material_sociedad, cod_linea, cod_sublinea, material_des, codigo_material } = req.query;
+        winston.info(`material_des: '${material_des}'`);
+        material_des = material_des.trim();
+        winston.info(`material_des: '${material_des}'`);
+        if( !(material_sociedad && material_sociedad !=="") ){
+            response.mensaje = "El campo material_sociedad no tiene un valor válido. Tipo de dato: '"+(typeof material_sociedad)+"', valor = "+material_sociedad;
+            winston.info("response: ", response);
+            res.status(200).json(response);
+            return;
+        }
+        if( !(cod_linea && cod_linea !=="") ){
+            response.mensaje = "El campo cod_linea no tiene un valor válido. Tipo de dato: '"+(typeof cod_linea)+"', valor = "+cod_linea;
+            winston.info("response: ", response);
+            res.status(200).json(response);
+            return;
+        }
+        if( !(cod_sublinea && cod_sublinea !=="") ){
+            response.mensaje = "El campo cod_sublinea no tiene un valor válido. Tipo de dato: '"+(typeof cod_sublinea)+"', valor = "+cod_sublinea;
+            winston.info("response: ", response);
+            res.status(200).json(response);
+            return;
+        }
+        let condicion_part1 = "";
+        if(codigo_material && codigo_material !== ''){
+            let arrayCodMaterial = codigo_material.split('-');
+            let cod_material_mod = String("000000000000"+arrayCodMaterial[0]).slice(-13) + arrayCodMaterial[1];
+            condicion_part1 = condicion_part1 + ` and codigomateriallocal='${cod_material_mod}'`;
+        } else {
+            if(!material_des){
+                material_des = "";
+            }
+            material_des = material_des.toUpperCase();
+            condicion_part1 = condicion_part1 + ` and material_des like '%${material_des}%'`;
+        }
+        
+        let bodyObj = {
+            condicion: `material_sociedad='${material_sociedad}' and linea_sap='${cod_linea}' and sublinea_sap='${cod_sublinea}'${condicion_part1}`,
+            columna: "distinct (material_des+'¬'+codigomateriallocal) as datos"
+        }
+        winston.info("bodyObj:", bodyObj);
+        let request = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': config.token_isicom
+            },
+            body: JSON.stringify(bodyObj),
+            cache: 'no-cache'
+        }
+
+        const datosIntegrador = await fetch("https://integracion.cpsaa.com.pe/organizacion/vista_material", request);
+        //console.log("datosIntegrador:", datosIntegrador);
+        const datosIntegradorObj = await datosIntegrador.json();
+        winston.info("datosIntegradorObj.length:", datosIntegradorObj.length);
+        response.datos = datosIntegradorObj;
+
+        response.resultado = 1;
+        response.mensaje = "";
+        res.status(200).json(response);
+    } catch (error) {
+        winston.error("Error en controllers.productoGenerico.buscarMaterial: ", error);
+        res.status(200).send({
+            codigo: 0,
+            mensaje: error.message
+        });
+    } finally {
+        winston.info(`=-=-=-=-=-=> Fin: controllers.productoGenerico.buscarMaterial`);
     }
 }
 

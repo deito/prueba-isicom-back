@@ -10,4 +10,6 @@ router.post('/buscar', productoGenericoController.buscar);
 
 router.patch('/actualizarEstado/:id_producto_generico', productoGenericoController.actualizarEstado);
 
+router.get('/buscarMaterial', productoGenericoController.buscarMaterial);
+
 module.exports = router;

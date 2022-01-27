@@ -12,4 +12,6 @@ router.patch('/actualizarEstado/:id_producto_generico', productoGenericoControll
 
 router.get('/buscarMaterial', productoGenericoController.buscarMaterial);
 
+router.get('/buscarUnidadMedida', productoGenericoController.buscarUnidadMedida);
+
 module.exports = router;

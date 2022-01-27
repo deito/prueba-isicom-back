@@ -176,6 +176,35 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "productoGenerico/buscarUnidadMedida",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:4000/productoGenerico/buscarUnidadMedida?codigo_material=000000000000401539",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "4000",
+					"path": [
+						"productoGenerico",
+						"buscarUnidadMedida"
+					],
+					"query": [
+						{
+							"key": "codigo_material",
+							"value": "000000000000401539"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

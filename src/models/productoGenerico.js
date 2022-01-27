@@ -124,6 +124,16 @@ model.actualizarEstado = async (conn, parametros) => {
     }
 }
 
+model.buscarUnidadMedida = async (conn, parametros) => {
+    try {
+        const queryResponse = await conn.query("SELECT material_unimed FROM dino.mp_material_comercial WHERE codigomateriallocal=$1", [parametros.codigo_material]);
+        return queryResponse;
+    } catch (error) {
+        error.stack = "\nError en models.productoGenerico.buscarUnidadMedida, " + error.stack;
+        throw error;
+    }
+}
+
 model.crear = async (conn, parametros) => {
     try {
         const queryResponse = await conn.query("INSERT INTO dino.tproducto_generico (");

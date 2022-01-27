@@ -3,6 +3,7 @@ const config = require('../config');
 const fetch = require('node-fetch');
 const postgresConn = require('../utils/postgres');
 const productoGenericoModel = require('../models/productoGenerico');
+const { info } = require('../utils/winston');
 
 const controller = {};
 
@@ -266,6 +267,48 @@ controller.buscarMaterial = async (req, res) => {
         });
     } finally {
         winston.info(`=-=-=-=-=-=> Fin: controllers.productoGenerico.buscarMaterial`);
+    }
+}
+
+controller.buscarUnidadMedida = async (req, res) => {
+    winston.info(`=-=-=-=-=-=> Inicio: controllers.productoGenerico.buscarUnidadMedida`);
+    try {
+        const response = {
+            resultado: 0,
+            mensaje: "Error inesperado controllers.productoGenerico.buscarMaterial"
+        };
+        let { codigo_material } = req.query;
+        winston.info("codigo_material:", codigo_material);
+        if( !(codigo_material & codigo_material !=="") ){
+            response.mensaje = "El campo codigo_material no tiene un valor válido. Tipo de dato: '"+(typeof codigo_material)+"', valor = "+codigo_material;
+            winston.info("response: ", response);
+            res.status(200).json(response);
+            return;
+        }
+
+        const buscarUnidadMedidaRes = await productoGenericoModel.buscarUnidadMedida(postgresConn, req.query);
+        winston.info("buscarUnidadMedidaRes.rows.length:", buscarUnidadMedidaRes.rows.length);
+        winston,info("buscarUnidadMedidaRes.rows[0].material_unimed:", buscarUnidadMedidaRes.rows[0].material_unimed);
+
+        if(buscarUnidadMedidaRes.rows.length > 0){
+            response.datos = buscarUnidadMedidaRes.rows[0].material_unimed;
+        } else {
+            response.datos = "";
+        }
+
+        response.resultado = 1;
+        response.mensaje = "";
+        
+        res.status(200).json(response);
+
+    } catch (error) {
+        winston.error("Error en controllers.productoGenerico.buscarUnidadMedida: ", error);
+        res.status(200).send({
+            codigo: 0,
+            mensaje: error.message
+        });
+    } finally {
+        winston.info(`=-=-=-=-=-=> Fin: controllers.productoGenerico.buscarUnidadMedida`);
     }
 }
 

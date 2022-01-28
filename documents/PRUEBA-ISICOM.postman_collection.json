@@ -237,6 +237,38 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id_producto_generico\": 29,\r\n    \"codigo_sociedad\": \"6012\",\r\n    \"cod_linea\": \"1000\",\r\n    \"linea\": \"Cemento\",\r\n    \"cod_sublinea\": \"10000010\",\r\n    \"sublinea\": \"Cemento\",\r\n    \"codigo_material\": \"000000000000401539\",\r\n    \"material\": \"CEMENTO ASTM I ENVAS BAJO ALCA PACASMAYO\",\r\n    \"unimed\": \"BLS\",\r\n    \"estado\": \"INACTIVO\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:4000/productoGenerico/actualizar",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "4000",
+					"path": [
+						"productoGenerico",
+						"actualizar"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

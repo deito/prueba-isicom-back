@@ -146,4 +146,15 @@ model.crear = async (conn, parametros) => {
     }
 }
 
+model.actualizar = async (conn, parametros) => {
+    try {
+        const queryResponse = await conn.query(`UPDATE dino.tproducto_generico SET codigo_sociedad=$1, cod_linea=$2, linea=$3, cod_sublinea=$4, sublinea=$5, codigo_material=$6, material=$7, unimed=$8, estado=$9 WHERE id_producto_generico=$10`,
+        [parametros.codigo_sociedad, parametros.cod_linea, parametros.linea, parametros.cod_sublinea, parametros.sublinea, parametros.codigo_material, parametros.material, parametros.unimed, parametros.estado, parametros.id_producto_generico]);
+        return queryResponse;
+    } catch (error) {
+        error.stack = "\nError en models.productoGenerico.actualizar, " + error.stack;
+        throw error;
+    }
+}
+
 module.exports = model;

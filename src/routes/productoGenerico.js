@@ -16,4 +16,6 @@ router.get('/buscarUnidadMedida', productoGenericoController.buscarUnidadMedida)
 
 router.post('/crear', productoGenericoController.crear);
 
+router.put('/actualizar', productoGenericoController.actualizar);
+
 module.exports = router;

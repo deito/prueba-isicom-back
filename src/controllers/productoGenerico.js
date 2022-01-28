@@ -343,4 +343,41 @@ controller.crear = async (req, res) => {
     }
 }
 
+controller.actualizar = async (req, res) => {
+    winston.info(`=-=-=-=-=-=> Inicio: controllers.productoGenerico.actualizar`);
+    try {
+        const response = {
+            resultado: 0,
+            mensaje: "Error inesperado controllers.productoGenerico.actualizar"
+        };
+        let { codigo_sociedad, cod_linea, linea, cod_sublinea, sublinea, codigo_material, material, unimed, estado, id_producto_generico } = req.body;
+        if( !(parseInt(id_producto_generico) && parseInt(id_producto_generico) > 0) ){
+            response.mensaje = "El campo id_producto_generico no tiene un valor válido. Tipo de dato: '"+(typeof id_producto_generico)+"', valor = "+id_producto_generico;
+            winston.info("response: ", response);
+            res.status(200).json(response);
+            return;
+        }
+
+        const actualizarRes = await productoGenericoModel.actualizar(postgresConn, req.body);
+        winston.info("actualizarRes.rowCount:", actualizarRes.rowCount);
+        if( !(actualizarRes && actualizarRes.rowCount == 1) ){
+            response.mensaje = "";
+            res.status(200).json(response);
+            return;
+        }
+
+        response.resultado = 1;
+        response.mensaje = "";
+        res.status(200).json(response);
+    } catch (error) {
+        winston.error("Error en controllers.productoGenerico.actualizar: ", error);
+        res.status(200).send({
+            codigo: 0,
+            mensaje: error.message
+        });
+    } finally {
+        winston.info(`=-=-=-=-=-=> Fin: controllers.productoGenerico.actualizar`);
+    }
+}
+
 module.exports = controller;

@@ -136,9 +136,13 @@ model.buscarUnidadMedida = async (conn, parametros) => {
 
 model.crear = async (conn, parametros) => {
     try {
-        const queryResponse = await conn.query("INSERT INTO dino.tproducto_generico (");
+        const queryResponse = await conn.query(`INSERT INTO dino.tproducto_generico (codigo_sociedad, cod_linea, linea, cod_sublinea, sublinea, codigo_material, material, creado_por, fecha_creacion, unimed, estado) 
+        VALUES($1, $2, $3, $4, $5, $6, $7, $8, NOW(),$9, $10) RETURNING id_producto_generico`, 
+        [parametros.codigo_sociedad, parametros.cod_linea, parametros.linea, parametros.cod_sublinea, parametros.sublinea, parametros.codigo_material, parametros.material, parametros.creado_por, parametros.unimed, parametros.estado]);
+        return queryResponse;
     } catch (error) {
-        
+        error.stack = "\nError en models.productoGenerico.crear, " + error.stack;
+        throw error;
     }
 }
 

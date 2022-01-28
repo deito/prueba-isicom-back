@@ -312,4 +312,35 @@ controller.buscarUnidadMedida = async (req, res) => {
     }
 }
 
+controller.crear = async (req, res) => {
+    winston.info(`=-=-=-=-=-=> Inicio: controllers.productoGenerico.crear`);
+    try {
+        const response = {
+            resultado: 0,
+            mensaje: "Error inesperado controllers.productoGenerico.buscarMaterial"
+        };
+        let { codigo_sociedad, cod_linea, linea, cod_sublinea, sublinea, codigo_material, material, creado_por, unimed, estado } = req.body;
+        winston.info("req.body:", req.body);
+        const crearRes = await productoGenericoModel.crear(postgresConn, req.body);
+        winston,info("crearRes.rows:", crearRes.rows);
+        if(crearRes.rows[0].id_producto_generico){
+            response.resultado = 1;
+            response.mensaje = "";
+            response.datos = crearRes.rows[0].id_producto_generico
+        } else {
+            response.mensaje = "Ocurrio un error al momento de insertar el nuevo Producto Generico."
+        }
+        
+        res.status(200).json(response);
+    } catch (error) {
+        winston.error("Error en controllers.productoGenerico.crear: ", error);
+        res.status(200).send({
+            codigo: 0,
+            mensaje: error.message
+        });
+    } finally {
+        winston.info(`=-=-=-=-=-=> Fin: controllers.productoGenerico.crear`);
+    }
+}
+
 module.exports = controller;

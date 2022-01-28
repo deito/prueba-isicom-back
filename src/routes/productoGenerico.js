@@ -14,4 +14,6 @@ router.get('/buscarMaterial', productoGenericoController.buscarMaterial);
 
 router.get('/buscarUnidadMedida', productoGenericoController.buscarUnidadMedida);
 
+router.post('/crear', productoGenericoController.crear);
+
 module.exports = router;

@@ -19,6 +19,7 @@ app.use(function(req, res, next) {
 });
 
 // Routes
+app.use('/test', require('./routes/testRouter'));
 app.use('/productoGenerico', require('./routes/productoGenerico'));
 
 // Export the app instance

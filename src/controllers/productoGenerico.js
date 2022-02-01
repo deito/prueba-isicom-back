@@ -3,7 +3,6 @@ const config = require('../config');
 const fetch = require('node-fetch');
 const postgresConn = require('../utils/postgres');
 const productoGenericoModel = require('../models/productoGenerico');
-const { info } = require('../utils/winston');
 
 const controller = {};
 
@@ -288,7 +287,7 @@ controller.buscarUnidadMedida = async (req, res) => {
 
         const buscarUnidadMedidaRes = await productoGenericoModel.buscarUnidadMedida(postgresConn, req.query);
         winston.info("buscarUnidadMedidaRes.rows.length:", buscarUnidadMedidaRes.rows.length);
-        winston,info("buscarUnidadMedidaRes.rows[0].material_unimed:", buscarUnidadMedidaRes.rows[0].material_unimed);
+        winston.info("buscarUnidadMedidaRes.rows[0].material_unimed:", buscarUnidadMedidaRes.rows[0].material_unimed);
 
         if(buscarUnidadMedidaRes.rows.length > 0){
             response.datos = buscarUnidadMedidaRes.rows[0].material_unimed;
@@ -322,7 +321,7 @@ controller.crear = async (req, res) => {
         let { codigo_sociedad, cod_linea, linea, cod_sublinea, sublinea, codigo_material, material, creado_por, unimed, estado } = req.body;
         winston.info("req.body:", req.body);
         const crearRes = await productoGenericoModel.crear(postgresConn, req.body);
-        winston,info("crearRes.rows:", crearRes.rows);
+        winston.info("crearRes.rows:", crearRes.rows);
         if(crearRes.rows[0].id_producto_generico){
             response.resultado = 1;
             response.mensaje = "";

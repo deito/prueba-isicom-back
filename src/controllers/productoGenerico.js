@@ -128,7 +128,7 @@ controller.buscar = async (req, res) => {
         response.mensaje = "";
         response.datos = {
             total_filas: contarTotalFilasDeBuscarRes.rows[0].cantidad,
-            lista:  busquedaRes.rows            
+            lista: busquedaRes.rows            
         };
         res.status(200).json(response);
     } catch (error) {
@@ -139,6 +139,34 @@ controller.buscar = async (req, res) => {
         });
     } finally {
         winston.info(`=-=-=-=-=-=> Fin: controllers.productoGenerico.buscar`);
+    }
+}
+
+controller.buscarAll = async (req, res) => {
+    winston.info(`=-=-=-=-=-=> Inicio: controllers.productoGenerico.buscarAll`);
+    try {
+        const response = {
+            resultado: 0,
+            mensaje: "Error inesperado controllers.productoGenerico.listarLinea"
+        };
+
+        let { cod_linea, cod_sublinea, material } = req.body;
+
+        const busquedaRes = await productoGenericoModel.buscarAll(postgresConn, req.body);
+        response.resultado = 1;
+        response.mensaje = "";
+        response.datos = {
+            lista: busquedaRes.rows
+        };
+        res.status(200).json(response);
+    } catch (error) {
+        winston.error("Error en controllers.productoGenerico.buscarAll: ", error);
+        res.status(200).send({
+            codigo: 0,
+            mensaje: error.message
+        }); 
+    } finally {
+        winston.info(`=-=-=-=-=-=> Fin: controllers.productoGenerico.buscarAll`);
     }
 }
 

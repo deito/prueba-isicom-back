@@ -8,6 +8,8 @@ router.get('/listarSubLinea', productoGenericoController.listarSubLinea);
 
 router.post('/buscar', productoGenericoController.buscar);
 
+router.post('/buscarAll', productoGenericoController.buscarAll);
+
 router.patch('/actualizarEstado/:id_producto_generico', productoGenericoController.actualizarEstado);
 
 router.get('/buscarMaterial', productoGenericoController.buscarMaterial);

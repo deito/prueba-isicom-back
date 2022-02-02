@@ -3,7 +3,6 @@ const config = require('../config');
 const fetch = require('node-fetch');
 const postgresConn = require('../utils/postgres');
 const productoGenericoModel = require('../models/productoGenerico');
-const { info } = require('../utils/winston');
 
 const controller = {};
 
@@ -129,7 +128,7 @@ controller.buscar = async (req, res) => {
         response.mensaje = "";
         response.datos = {
             total_filas: contarTotalFilasDeBuscarRes.rows[0].cantidad,
-            lista:  busquedaRes.rows            
+            lista: busquedaRes.rows            
         };
         res.status(200).json(response);
     } catch (error) {
@@ -140,6 +139,34 @@ controller.buscar = async (req, res) => {
         });
     } finally {
         winston.info(`=-=-=-=-=-=> Fin: controllers.productoGenerico.buscar`);
+    }
+}
+
+controller.buscarAll = async (req, res) => {
+    winston.info(`=-=-=-=-=-=> Inicio: controllers.productoGenerico.buscarAll`);
+    try {
+        const response = {
+            resultado: 0,
+            mensaje: "Error inesperado controllers.productoGenerico.listarLinea"
+        };
+
+        let { cod_linea, cod_sublinea, material } = req.body;
+
+        const busquedaRes = await productoGenericoModel.buscarAll(postgresConn, req.body);
+        response.resultado = 1;
+        response.mensaje = "";
+        response.datos = {
+            lista: busquedaRes.rows
+        };
+        res.status(200).json(response);
+    } catch (error) {
+        winston.error("Error en controllers.productoGenerico.buscarAll: ", error);
+        res.status(200).send({
+            codigo: 0,
+            mensaje: error.message
+        }); 
+    } finally {
+        winston.info(`=-=-=-=-=-=> Fin: controllers.productoGenerico.buscarAll`);
     }
 }
 
@@ -288,7 +315,7 @@ controller.buscarUnidadMedida = async (req, res) => {
 
         const buscarUnidadMedidaRes = await productoGenericoModel.buscarUnidadMedida(postgresConn, req.query);
         winston.info("buscarUnidadMedidaRes.rows.length:", buscarUnidadMedidaRes.rows.length);
-        winston,info("buscarUnidadMedidaRes.rows[0].material_unimed:", buscarUnidadMedidaRes.rows[0].material_unimed);
+        winston.info("buscarUnidadMedidaRes.rows[0].material_unimed:", buscarUnidadMedidaRes.rows[0].material_unimed);
 
         if(buscarUnidadMedidaRes.rows.length > 0){
             response.datos = buscarUnidadMedidaRes.rows[0].material_unimed;
@@ -322,7 +349,7 @@ controller.crear = async (req, res) => {
         let { codigo_sociedad, cod_linea, linea, cod_sublinea, sublinea, codigo_material, material, creado_por, unimed, estado } = req.body;
         winston.info("req.body:", req.body);
         const crearRes = await productoGenericoModel.crear(postgresConn, req.body);
-        winston,info("crearRes.rows:", crearRes.rows);
+        winston.info("crearRes.rows:", crearRes.rows);
         if(crearRes.rows[0].id_producto_generico){
             response.resultado = 1;
             response.mensaje = "";

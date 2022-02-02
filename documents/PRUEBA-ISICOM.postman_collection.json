@@ -269,6 +269,96 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "test/timeout",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:4000/test/timeout?ms=2000",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "4000",
+					"path": [
+						"test",
+						"timeout"
+					],
+					"query": [
+						{
+							"key": "ms",
+							"value": "2000"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "test/node_fetch_timeout",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:4000/test/node_fetch_timeout?tiempo=2000",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "4000",
+					"path": [
+						"test",
+						"node_fetch_timeout"
+					],
+					"query": [
+						{
+							"key": "tiempo",
+							"value": "2000"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "productoGenerico/buscarAll",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"cod_linea\": \"1000\",\r\n    \"cod_sublinea\": \"10000010\",\r\n    \"material\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:4000/productoGenerico/buscarAll",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "4000",
+					"path": [
+						"productoGenerico",
+						"buscarAll"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

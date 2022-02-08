@@ -1,13 +1,22 @@
+require('dotenv').config();
 const path = require('path');
 const config = {};
-const INSTANCIA_CLOUD_DB = (process.env.DB_SOCKET_PATH ? `${process.env.DB_SOCKET_PATH}/${process.env.INSTANCE_CONNECTION_NAME}` : '127.0.0.1');
+//const INSTANCIA_CLOUD_DB = (process.env.DB_SOCKET_PATH ? `${process.env.DB_SOCKET_PATH}/${process.env.INSTANCE_CONNECTION_NAME}` : (process.env.IP_POSTGRES ? process.env.IP_POSTGRES : '127.0.0.1') );
+
+//console.log("process.env", process.env);
+//console.log("__dirname:", __dirname);
+console.log("process.env.USUARIO_POSTGRES:", process.env.USUARIO_POSTGRES);
+console.log("process.env.NODE_ENV:", process.env.NODE_ENV);
+console.log("process.env.IP_POSTGRES:", process.env.IP_POSTGRES);
+console.log("process.env.PORT_DB_POSTGRES:", process.env.PORT_DB_POSTGRES);
 
 config.postgres = {
-    user: process.env.SQL_USER || 'postgres',
-    password: process.env.SQL_PASSWORD || 'postgres',
-    host: INSTANCIA_CLOUD_DB,
-    port: process.env.SQL_PORT || 5434,
-    database: process.env.SQL_DATABASE || 'PRUEBA_ISICOM'
+    user: process.env.USUARIO_POSTGRES || 'postgres',
+    password: process.env.PASSWORD_POSTGRES || 'postgres',
+    //host: INSTANCIA_CLOUD_DB,
+    host: process.env.IP_POSTGRES ? process.env.IP_POSTGRES : '127.0.0.1',
+    port: process.env.PORT_DB_POSTGRES || 5434,
+    database: process.env.DATABASE_POSTGRES ||'PRUEBA_ISICOM'
 }
 
 config.express = {
